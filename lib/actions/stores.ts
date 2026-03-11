@@ -33,7 +33,9 @@ export async function createStore(formData: FormData) {
   if (!whatsappCheck.ok) return { error: whatsappCheck.error };
 
   if (bio && bio.length > VALIDATION.BIO_MAX) {
-    return { error: `Bio deve ter no máximo ${VALIDATION.BIO_MAX} caracteres.` };
+    return {
+      error: `Bio deve ter no máximo ${VALIDATION.BIO_MAX} caracteres.`,
+    };
   }
 
   const themeCheck = validateHexColor(theme_color);
@@ -95,7 +97,9 @@ export async function updateStore(storeId: string, formData: FormData) {
   if (!whatsappCheck.ok) return { error: whatsappCheck.error };
 
   if (bio && bio.length > VALIDATION.BIO_MAX) {
-    return { error: `Bio deve ter no máximo ${VALIDATION.BIO_MAX} caracteres.` };
+    return {
+      error: `Bio deve ter no máximo ${VALIDATION.BIO_MAX} caracteres.`,
+    };
   }
 
   const themeCheck = validateHexColor(theme_color);
