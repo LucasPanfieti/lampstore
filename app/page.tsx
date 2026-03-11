@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Zap,
   ShoppingBag,
   Share2,
   ChevronRight,
   Check,
   Star,
+  Zap,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -16,9 +17,13 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white fill-white" />
-              </div>
+              <Image
+                src="/logo_lampstore.webp"
+                alt="LampStore"
+                width={32}
+                height={32}
+                className="rounded-lg"
+              />
               <span
                 className="text-xl font-bold text-gray-900"
                 style={{ fontFamily: "'DM Serif Display', serif" }}
@@ -462,9 +467,13 @@ export default function HomePage() {
       <footer className="border-t border-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-purple-500 rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white fill-white" />
-            </div>
+            <Image
+              src="/logo_lampstore.webp"
+              alt="LampStore"
+              width={28}
+              height={28}
+              className="rounded-lg"
+            />
             <span
               className="font-bold text-gray-900"
               style={{ fontFamily: "'DM Serif Display', serif" }}

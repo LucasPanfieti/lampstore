@@ -1,8 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Settings, BarChart2, Zap, ExternalLink, X, Menu } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  Settings,
+  BarChart2,
+  ExternalLink,
+  X,
+  Menu,
+} from "lucide-react";
 import { Store } from "@/types";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -22,9 +31,13 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-gray-100">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white fill-white" />
-          </div>
+          <Image
+            src="/logo_lampstore.webp"
+            alt="LampStore"
+            width={32}
+            height={32}
+            className="rounded-lg"
+          />
           <span
             className="text-xl font-bold text-gray-900"
             style={{ fontFamily: "'DM Serif Display', serif" }}
@@ -51,10 +64,15 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
                 isActive
                   ? "bg-purple-50 text-purple-600"
-                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
               )}
             >
-              <Icon className={cn("w-5 h-5", isActive ? "text-purple-500" : "text-gray-400")} />
+              <Icon
+                className={cn(
+                  "w-5 h-5",
+                  isActive ? "text-purple-500" : "text-gray-400",
+                )}
+              />
               {item.label}
             </Link>
           );
@@ -98,7 +116,7 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
       <aside
         className={cn(
           "fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-100 z-50 transition-transform lg:hidden",
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+          mobileOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
         <button

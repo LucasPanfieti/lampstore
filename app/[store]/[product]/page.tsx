@@ -183,9 +183,13 @@ export default async function ProductPage({ params }: Props) {
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
         >
-          <div className="w-5 h-5 bg-purple-500 rounded flex items-center justify-center">
-            <Zap className="w-3 h-3 text-white fill-white" />
-          </div>
+          <Image
+            src="/logo_lampstore.webp"
+            alt="LampStore"
+            width={20}
+            height={20}
+            className="rounded"
+          />
           Crie sua loja grátis no{" "}
           <span className="font-semibold text-gray-600">LampStore</span>
         </Link>
