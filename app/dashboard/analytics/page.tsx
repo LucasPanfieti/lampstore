@@ -155,7 +155,7 @@ export default async function AnalyticsPage() {
                   style={{ height: "120px" }}
                 >
                   <div
-                    className="w-full bg-orange-500 rounded-t-lg transition-all min-h-[4px]"
+                    className="w-full bg-purple-500 rounded-t-lg transition-all min-h-[4px]"
                     style={{ height: `${Math.max(height, 3)}%` }}
                     title={`${views} visitas`}
                   />

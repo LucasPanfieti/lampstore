@@ -22,7 +22,7 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-gray-100">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
             <Zap className="w-5 h-5 text-white fill-white" />
           </div>
           <span
@@ -50,11 +50,11 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
                 isActive
-                  ? "bg-orange-50 text-orange-600"
+                  ? "bg-purple-50 text-purple-600"
                   : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
               )}
             >
-              <Icon className={cn("w-5 h-5", isActive ? "text-orange-500" : "text-gray-400")} />
+              <Icon className={cn("w-5 h-5", isActive ? "text-purple-500" : "text-gray-400")} />
               {item.label}
             </Link>
           );

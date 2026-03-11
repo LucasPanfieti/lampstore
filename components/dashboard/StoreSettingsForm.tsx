@@ -45,19 +45,19 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   return (
     <div className="space-y-6">
       {/* Store link */}
-      <div className="bg-orange-50 rounded-2xl p-5 space-y-3">
+      <div className="bg-purple-50 rounded-2xl p-5 space-y-3">
         <div>
           <h3 className="font-semibold text-gray-900 text-sm">Link da sua loja</h3>
           <p className="text-xs text-gray-500 mt-0.5">Compartilhe este link na sua bio</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex-1 bg-white rounded-xl px-4 py-2.5 text-sm text-gray-700 font-medium truncate border border-orange-100">
+          <div className="flex-1 bg-white rounded-xl px-4 py-2.5 text-sm text-gray-700 font-medium truncate border border-purple-100">
             {storeUrl}
           </div>
           <button
             type="button"
             onClick={handleCopy}
-            className="flex items-center gap-1.5 bg-orange-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-orange-600 transition-all whitespace-nowrap"
+            className="flex items-center gap-1.5 bg-purple-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-purple-600 transition-all whitespace-nowrap"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? "Copiado!" : "Copiar"}
@@ -76,7 +76,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             type="text"
             required
             defaultValue={store.name}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
         </div>
 
@@ -90,7 +90,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             type="text"
             defaultValue={store.whatsapp ?? ""}
             placeholder="5511999999999"
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
           <p className="text-xs text-gray-400">Formato: código do país + DDD + número (sem espaços)</p>
         </div>
@@ -105,7 +105,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             rows={3}
             defaultValue={store.bio ?? ""}
             placeholder="Conte sobre sua loja..."
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
           />
         </div>
 
@@ -192,7 +192,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-orange-500 text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-purple-500 text-white font-semibold py-3.5 rounded-xl hover:bg-purple-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {loading && <Loader2 className="w-5 h-5 animate-spin" />}
           Salvar configurações

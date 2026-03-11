@@ -31,7 +31,7 @@ export default function DashboardHeader({
             onClick={() => setOpen(!open)}
             className="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 transition-all"
           >
-            <div className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-sm font-bold">
               {user.email?.[0].toUpperCase()}
             </div>
           </button>

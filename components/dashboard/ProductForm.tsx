@@ -61,7 +61,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
           Foto do produto
         </label>
         <div
-          className="relative border-2 border-dashed border-gray-200 rounded-2xl overflow-hidden cursor-pointer hover:border-orange-300 transition-colors"
+          className="relative border-2 border-dashed border-gray-200 rounded-2xl overflow-hidden cursor-pointer hover:border-purple-300 transition-colors"
           onClick={() => fileRef.current?.click()}
         >
           {imagePreview ? (
@@ -114,7 +114,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
           required
           defaultValue={product?.name}
           placeholder="Ex: Camiseta Básica Branca"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         />
       </div>
 
@@ -130,7 +130,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
           required
           defaultValue={product?.price}
           placeholder="0.00"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         />
       </div>
 
@@ -141,7 +141,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
           rows={4}
           defaultValue={product?.description ?? ""}
           placeholder="Descreva o produto, tamanhos disponíveis, material, etc."
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
         />
       </div>
 
@@ -160,7 +160,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
       <button
         type="submit"
         disabled={loading || success}
-        className="w-full bg-orange-500 text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-base"
+        className="w-full bg-purple-500 text-white font-semibold py-3.5 rounded-xl hover:bg-purple-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-base"
       >
         {loading && <Loader2 className="w-5 h-5 animate-spin" />}
         {product ? "Salvar alterações" : "Adicionar produto"}

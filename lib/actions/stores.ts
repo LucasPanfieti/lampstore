@@ -17,8 +17,8 @@ export async function createStore(formData: FormData) {
   const slug = slugify((formData.get("slug") as string) || name);
   const whatsapp = formData.get("whatsapp") as string;
   const bio = formData.get("bio") as string;
-  const theme_color = (formData.get("theme_color") as string) || "#f97316";
-  const button_color = (formData.get("button_color") as string) || "#f97316";
+  const theme_color = (formData.get("theme_color") as string) || "#7723A4";
+  const button_color = (formData.get("button_color") as string) || "#7723A4";
 
   // Check if slug is taken
   const { data: existing } = await supabase

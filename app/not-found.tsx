@@ -4,8 +4,8 @@ import { Zap } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 text-center space-y-6">
-      <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center">
-        <Zap className="w-8 h-8 text-orange-500" />
+      <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center">
+        <Zap className="w-8 h-8 text-purple-500" />
       </div>
       <div className="space-y-2">
         <h1
@@ -21,7 +21,7 @@ export default function NotFound() {
       <div className="flex gap-3">
         <Link
           href="/"
-          className="bg-orange-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition-all"
+          className="bg-purple-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-purple-600 transition-all"
         >
           Ir para o início
         </Link>

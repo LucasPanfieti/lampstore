@@ -7,8 +7,16 @@ import { Loader2, Store, AtSign, Phone, FileText, Palette } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const THEME_COLORS = [
-  "#f97316", "#ef4444", "#8b5cf6", "#3b82f6", "#10b981",
-  "#f59e0b", "#ec4899", "#06b6d4", "#84cc16", "#6366f1",
+  "#7723A4",
+  "#ef4444",
+  "#8b5cf6",
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ec4899",
+  "#06b6d4",
+  "#84cc16",
+  "#6366f1",
 ];
 
 export default function CreateStoreForm() {
@@ -16,7 +24,7 @@ export default function CreateStoreForm() {
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
-  const [themeColor, setThemeColor] = useState("#f97316");
+  const [themeColor, setThemeColor] = useState("#7723A4");
   const router = useRouter();
 
   const handleNameChange = (value: string) => {
@@ -39,7 +47,10 @@ export default function CreateStoreForm() {
   }
 
   return (
-    <form action={handleSubmit} className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-6">
+    <form
+      action={handleSubmit}
+      className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-6"
+    >
       <div className="space-y-1">
         <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Store className="w-4 h-4 text-gray-400" />
@@ -52,7 +63,7 @@ export default function CreateStoreForm() {
           value={name}
           onChange={(e) => handleNameChange(e.target.value)}
           placeholder="Ex: Loja da Ana"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         />
       </div>
 
@@ -72,7 +83,7 @@ export default function CreateStoreForm() {
             value={slug}
             onChange={(e) => setSlug(slugify(e.target.value))}
             placeholder="minhaloja"
-            className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
         </div>
         {slug && (
@@ -91,9 +102,11 @@ export default function CreateStoreForm() {
           name="whatsapp"
           type="text"
           placeholder="5511999999999"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         />
-        <p className="text-xs text-gray-400">Ex: 5511999999999 (sem espaços ou hífens)</p>
+        <p className="text-xs text-gray-400">
+          Ex: 5511999999999 (sem espaços ou hífens)
+        </p>
       </div>
 
       <div className="space-y-1">
@@ -105,7 +118,7 @@ export default function CreateStoreForm() {
           name="bio"
           rows={3}
           placeholder="Conte sobre sua loja e o que você vende..."
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
         />
       </div>
 
@@ -124,7 +137,10 @@ export default function CreateStoreForm() {
               style={{
                 backgroundColor: color,
                 borderColor: themeColor === color ? color : "transparent",
-                boxShadow: themeColor === color ? `0 0 0 3px white, 0 0 0 5px ${color}` : "none",
+                boxShadow:
+                  themeColor === color
+                    ? `0 0 0 3px white, 0 0 0 5px ${color}`
+                    : "none",
               }}
             />
           ))}
@@ -142,7 +158,7 @@ export default function CreateStoreForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-orange-500 text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-base"
+        className="w-full bg-purple-500 text-white font-semibold py-3.5 rounded-xl hover:bg-purple-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-base"
       >
         {loading && <Loader2 className="w-5 h-5 animate-spin" />}
         Criar minha loja ⚡

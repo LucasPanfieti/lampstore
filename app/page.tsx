@@ -16,7 +16,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white fill-white" />
               </div>
               <span
@@ -35,7 +35,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/signup"
-                className="text-sm font-semibold bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition-colors"
+                className="text-sm font-semibold bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-600 transition-colors"
               >
                 Criar loja grátis
               </Link>
@@ -49,8 +49,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-fade-up animation-fill-both">
-              <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-600 text-sm font-medium px-4 py-2 rounded-full">
-                <Zap className="w-4 h-4 fill-orange-500" />
+              <div className="inline-flex items-center gap-2 bg-purple-50 text-purple-600 text-sm font-medium px-4 py-2 rounded-full">
+                <Zap className="w-4 h-4 fill-purple-500" />
                 Grátis para começar
               </div>
               <h1
@@ -67,14 +67,14 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/signup"
-                  className="inline-flex items-center justify-center gap-2 bg-orange-500 text-white text-lg font-semibold px-8 py-4 rounded-2xl hover:bg-orange-600 transition-all hover:scale-105 shadow-lg shadow-orange-200"
+                  className="inline-flex items-center justify-center gap-2 bg-purple-500 text-white text-lg font-semibold px-8 py-4 rounded-2xl hover:bg-purple-600 transition-all hover:scale-105 shadow-lg shadow-purple-200"
                 >
                   Criar minha loja grátis
                   <ChevronRight className="w-5 h-5" />
                 </Link>
                 <Link
                   href="#como-funciona"
-                  className="inline-flex items-center justify-center gap-2 text-gray-700 text-lg font-medium px-8 py-4 rounded-2xl border-2 border-gray-200 hover:border-orange-300 transition-all"
+                  className="inline-flex items-center justify-center gap-2 text-gray-700 text-lg font-medium px-8 py-4 rounded-2xl border-2 border-gray-200 hover:border-purple-300 transition-all"
                 >
                   Como funciona
                 </Link>
@@ -97,10 +97,10 @@ export default function HomePage() {
 
             {/* Mock store preview */}
             <div className="relative animate-fade-up animation-fill-both animate-delay-200">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-amber-50 rounded-3xl transform rotate-3"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-50 rounded-3xl transform rotate-3"></div>
               <div className="relative bg-white rounded-3xl shadow-2xl p-6 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg">
+                  <div className="w-12 h-12 bg-purple-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg">
                     A
                   </div>
                   <div>
@@ -124,13 +124,13 @@ export default function HomePage() {
                       key={p.name}
                       className="bg-gray-50 rounded-xl p-3 space-y-2"
                     >
-                      <div className="w-full h-20 bg-orange-50 rounded-lg flex items-center justify-center text-3xl">
+                      <div className="w-full h-20 bg-purple-50 rounded-lg flex items-center justify-center text-3xl">
                         {p.emoji}
                       </div>
                       <div className="text-xs font-semibold text-gray-900">
                         {p.name}
                       </div>
-                      <div className="text-xs font-bold text-orange-500">
+                      <div className="text-xs font-bold text-purple-500">
                         {p.price}
                       </div>
                       <button className="w-full bg-green-500 text-white text-xs font-semibold py-1.5 rounded-lg">
@@ -205,7 +205,7 @@ export default function HomePage() {
             ].map((s) => (
               <div
                 key={s.step}
-                className="relative bg-white rounded-3xl p-8 border border-gray-100 hover:border-orange-200 hover:shadow-lg transition-all group"
+                className="relative bg-white rounded-3xl p-8 border border-gray-100 hover:border-purple-200 hover:shadow-lg transition-all group"
               >
                 <div
                   className="text-6xl font-bold text-gray-50 absolute top-6 right-6 leading-none select-none"
@@ -214,7 +214,7 @@ export default function HomePage() {
                   {s.step}
                 </div>
                 <div className="relative space-y-4">
-                  <div className="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all">
+                  <div className="w-12 h-12 bg-purple-100 text-purple-500 rounded-2xl flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-all">
                     {s.icon}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">{s.title}</h3>
@@ -387,12 +387,12 @@ export default function HomePage() {
                 Começar grátis
               </Link>
             </div>
-            <div className="bg-orange-500 rounded-3xl p-8 space-y-6 relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-white text-orange-500 text-xs font-bold px-3 py-1 rounded-full">
+            <div className="bg-purple-500 rounded-3xl p-8 space-y-6 relative overflow-hidden">
+              <div className="absolute top-4 right-4 bg-white text-purple-500 text-xs font-bold px-3 py-1 rounded-full">
                 Em breve
               </div>
               <div>
-                <div className="text-sm font-semibold text-orange-100 uppercase tracking-wider">
+                <div className="text-sm font-semibold text-purple-100 uppercase tracking-wider">
                   Pro
                 </div>
                 <div
@@ -401,7 +401,7 @@ export default function HomePage() {
                 >
                   R$ 29
                 </div>
-                <div className="text-orange-200 text-sm">por mês</div>
+                <div className="text-purple-200 text-sm">por mês</div>
               </div>
               <ul className="space-y-3 text-sm">
                 {[
@@ -414,7 +414,7 @@ export default function HomePage() {
                 ].map((f) => (
                   <li
                     key={f}
-                    className="flex items-center gap-2 text-orange-100"
+                    className="flex items-center gap-2 text-purple-100"
                   >
                     <Check className="w-4 h-4 text-white flex-shrink-0" />
                     {f}
@@ -447,7 +447,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/signup"
-            className="inline-flex items-center gap-2 bg-orange-500 text-white text-xl font-semibold px-10 py-5 rounded-2xl hover:bg-orange-600 transition-all hover:scale-105 shadow-xl shadow-orange-200"
+            className="inline-flex items-center gap-2 bg-purple-500 text-white text-xl font-semibold px-10 py-5 rounded-2xl hover:bg-purple-600 transition-all hover:scale-105 shadow-xl shadow-purple-200"
           >
             Criar minha loja grátis
             <ChevronRight className="w-6 h-6" />
@@ -462,7 +462,7 @@ export default function HomePage() {
       <footer className="border-t border-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 bg-purple-500 rounded-lg flex items-center justify-center">
               <Zap className="w-4 h-4 text-white fill-white" />
             </div>
             <span
@@ -473,7 +473,8 @@ export default function HomePage() {
             </span>
           </div>
           <p className="text-sm text-gray-400">
-            © 2024 LampStore. Feito com ❤️ no Brasil.
+            LampStore © {new Date().getFullYear()} · Todos os direitos
+            reservados
           </p>
           <div className="flex gap-4 text-sm text-gray-400">
             <Link href="/privacy" className="hover:text-gray-600">

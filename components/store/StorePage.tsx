@@ -10,6 +10,7 @@ import {
   buildCartMessage,
   buildSingleProductMessage,
 } from "@/lib/utils";
+import { trackEvent } from "@/lib/actions/analytics";
 import {
   ShoppingCart,
   Plus,
@@ -68,6 +69,7 @@ export default function StorePage({ store, products }: StorePageProps) {
 
   const handleCartCheckout = () => {
     if (!store.whatsapp || cart.length === 0) return;
+    trackEvent(store.id, "whatsapp_click", { source: "cart" });
     const message = buildCartMessage(
       cart.map((item) => ({
         name: item.product.name,
@@ -81,11 +83,12 @@ export default function StorePage({ store, products }: StorePageProps) {
 
   const handleBuyNow = (product: Product) => {
     if (!store.whatsapp) return;
+    trackEvent(store.id, "whatsapp_click", { product_id: product.id });
     const message = buildSingleProductMessage(product.name, store.name);
     window.open(buildWhatsAppUrl(store.whatsapp, message), "_blank");
   };
 
-  const themeColor = store.theme_color || "#f97316";
+  const themeColor = store.theme_color || "#7723A4";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -129,6 +132,9 @@ export default function StorePage({ store, products }: StorePageProps) {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent(store.id, "whatsapp_click", { source: "header" })
+                }
                 className="flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-sm hover:opacity-90 transition-all"
                 style={{ backgroundColor: "#25D366" }}
               >
@@ -377,7 +383,7 @@ export default function StorePage({ store, products }: StorePageProps) {
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
         >
-          <div className="w-5 h-5 bg-orange-500 rounded flex items-center justify-center">
+          <div className="w-5 h-5 bg-purple-500 rounded flex items-center justify-center">
             <Zap className="w-3 h-3 text-white fill-white" />
           </div>
           Crie sua loja grátis no{" "}

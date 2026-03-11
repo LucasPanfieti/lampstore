@@ -19,8 +19,8 @@ create table public.stores (
   slug text not null unique,
   whatsapp text,
   bio text,
-  theme_color text default '#f97316' not null,
-  button_color text default '#f97316' not null,
+  theme_color text default '#7723A4' not null,
+  button_color text default '#7723A4' not null,
   logo_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );

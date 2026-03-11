@@ -47,7 +47,7 @@ export default function LoginPage() {
                 type="email"
                 required
                 placeholder="seu@email.com"
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               />
               <button
                 type="button"
@@ -82,7 +82,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 text-white font-semibold py-3 rounded-xl hover:bg-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-purple-500 text-white font-semibold py-3 rounded-xl hover:bg-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             Entrar
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-gray-500">
           Não tem conta?{" "}
-          <Link href="/signup" className="text-orange-500 font-semibold hover:text-orange-600">
+          <Link href="/signup" className="text-purple-500 font-semibold hover:text-purple-600">
             Criar grátis
           </Link>
         </p>

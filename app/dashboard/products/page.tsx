@@ -52,7 +52,7 @@ export default async function ProductsPage() {
         {canAdd ? (
           <Link
             href="/dashboard/products/new"
-            className="flex items-center gap-2 bg-orange-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-orange-600 transition-all"
+            className="flex items-center gap-2 bg-purple-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-purple-600 transition-all"
           >
             <Plus className="w-4 h-4" />
             Novo produto
@@ -79,7 +79,7 @@ export default async function ProductsPage() {
             style={{
               width: `${(productCount / FREE_LIMIT) * 100}%`,
               backgroundColor:
-                productCount >= FREE_LIMIT ? "#ef4444" : "#f97316",
+                productCount >= FREE_LIMIT ? "#ef4444" : "#7723A4",
             }}
           />
         </div>
@@ -87,8 +87,8 @@ export default async function ProductsPage() {
 
       {!products || products.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 p-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mx-auto">
-            <Package className="w-8 h-8 text-orange-400" />
+          <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mx-auto">
+            <Package className="w-8 h-8 text-purple-400" />
           </div>
           <div>
             <h3 className="font-semibold text-gray-900">
@@ -100,7 +100,7 @@ export default async function ProductsPage() {
           </div>
           <Link
             href="/dashboard/products/new"
-            className="inline-flex items-center gap-2 bg-orange-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-orange-600 transition-all"
+            className="inline-flex items-center gap-2 bg-purple-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-purple-600 transition-all"
           >
             <Plus className="w-4 h-4" />
             Adicionar produto
@@ -129,7 +129,7 @@ export default async function ProductsPage() {
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                   <Link
                     href={`/dashboard/products/${product.id}`}
-                    className="p-2 bg-white rounded-xl text-gray-700 hover:text-orange-500 transition-colors"
+                    className="p-2 bg-white rounded-xl text-gray-700 hover:text-purple-500 transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
                   </Link>
@@ -140,7 +140,7 @@ export default async function ProductsPage() {
                 <div className="font-semibold text-gray-900 text-sm truncate">
                   {product.name}
                 </div>
-                <div className="text-lg font-bold text-orange-500">
+                <div className="text-lg font-bold text-purple-500">
                   {formatCurrency(product.price)}
                 </div>
                 {product.description && (

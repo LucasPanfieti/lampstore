@@ -9,8 +9,9 @@ import {
   buildWhatsAppUrl,
   buildSingleProductMessage,
 } from "@/lib/utils";
-import { ArrowLeft, Package, Zap, MessageCircle } from "lucide-react";
+import { ArrowLeft, Package, Zap } from "lucide-react";
 import { Store, Product } from "@/types";
+import WhatsAppBuyButton from "@/components/store/WhatsAppBuyButton";
 
 interface Props {
   params: Promise<{ store: string; product: string }>;
@@ -80,7 +81,7 @@ export default async function ProductPage({ params }: Props) {
   // Track product view
   await trackEvent(store.id, "product_view", { product_id: product.id });
 
-  const themeColor = store.theme_color || "#f97316";
+  const themeColor = store.theme_color || "#7723A4";
 
   const whatsappUrl = store.whatsapp
     ? buildWhatsAppUrl(
@@ -154,16 +155,10 @@ export default async function ProductPage({ params }: Props) {
 
             <div className="space-y-3 pt-2">
               {whatsappUrl ? (
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full text-white font-bold py-4 rounded-2xl text-lg hover:opacity-90 transition-all whatsapp-pulse"
-                  style={{ backgroundColor: "#25D366" }}
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Comprar pelo WhatsApp
-                </a>
+                <WhatsAppBuyButton
+                  whatsappUrl={whatsappUrl}
+                  storeId={store.id}
+                />
               ) : (
                 <div className="text-center py-4 text-gray-400 text-sm">
                   Esta loja ainda não configurou o WhatsApp
@@ -188,7 +183,7 @@ export default async function ProductPage({ params }: Props) {
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
         >
-          <div className="w-5 h-5 bg-orange-500 rounded flex items-center justify-center">
+          <div className="w-5 h-5 bg-purple-500 rounded flex items-center justify-center">
             <Zap className="w-3 h-3 text-white fill-white" />
           </div>
           Crie sua loja grátis no{" "}

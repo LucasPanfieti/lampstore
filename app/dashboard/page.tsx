@@ -76,10 +76,10 @@ export default async function DashboardPage() {
         <Link
           href={`/${store.slug}`}
           target="_blank"
-          className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 hover:border-orange-200 hover:shadow-sm transition-all group"
+          className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all group"
         >
-          <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-500 transition-all">
-            <ExternalLink className="w-5 h-5 text-orange-500 group-hover:text-white transition-all" />
+          <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-500 transition-all">
+            <ExternalLink className="w-5 h-5 text-purple-500 group-hover:text-white transition-all" />
           </div>
           <div>
             <div className="font-semibold text-gray-900">Ver minha loja</div>
@@ -87,19 +87,19 @@ export default async function DashboardPage() {
               lampstore.com/{store.slug}
             </div>
           </div>
-          <ArrowRight className="w-4 h-4 text-gray-300 ml-auto group-hover:text-orange-400 transition-all" />
+          <ArrowRight className="w-4 h-4 text-gray-300 ml-auto group-hover:text-purple-400 transition-all" />
         </Link>
 
         <Link
           href="/dashboard/products/new"
-          className="flex items-center gap-4 bg-orange-500 rounded-2xl p-5 hover:bg-orange-600 transition-all group"
+          className="flex items-center gap-4 bg-purple-500 rounded-2xl p-5 hover:bg-purple-600 transition-all group"
         >
           <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
             <Plus className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="font-semibold text-white">Adicionar produto</div>
-            <div className="text-sm text-orange-100">
+            <div className="text-sm text-purple-100">
               {productCount}/{FREE_LIMIT} produtos usados
             </div>
           </div>
@@ -131,7 +131,7 @@ export default async function DashboardPage() {
                 label: "Produtos",
                 value: productCount,
                 icon: Package,
-                color: "orange",
+                color: "purple",
               },
             ].map((stat) => {
               const Icon = stat.icon;
@@ -146,7 +146,7 @@ export default async function DashboardPage() {
                         ? "bg-blue-50"
                         : stat.color === "green"
                           ? "bg-green-50"
-                          : "bg-orange-50"
+                          : "bg-purple-50"
                     }`}
                   >
                     <Icon
@@ -155,7 +155,7 @@ export default async function DashboardPage() {
                           ? "text-blue-500"
                           : stat.color === "green"
                             ? "text-green-500"
-                            : "text-orange-500"
+                            : "text-purple-500"
                       }`}
                     />
                   </div>
@@ -174,7 +174,7 @@ export default async function DashboardPage() {
 
       {/* Product limit warning */}
       {productCount >= FREE_LIMIT && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex gap-4">
+        <div className="bg-purple-50 border border-amber-200 rounded-2xl p-5 flex gap-4">
           <div className="text-2xl">⚠️</div>
           <div>
             <div className="font-semibold text-amber-900">
@@ -189,10 +189,10 @@ export default async function DashboardPage() {
       )}
 
       {/* Share link */}
-      <div className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl p-6 space-y-4">
+      <div className="bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl p-6 space-y-4">
         <div>
           <h3 className="text-lg font-bold text-white">Compartilhe sua loja</h3>
-          <p className="text-orange-100 text-sm mt-1">
+          <p className="text-purple-100 text-sm mt-1">
             Coloque este link na bio do Instagram ou TikTok
           </p>
         </div>
