@@ -15,13 +15,15 @@ async function assertStoreOwnership(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
   storeId: string,
-) {
-  const { data } = await supabase
+): Promise<{ id: string } | null> {
+  const { data, error } = await supabase
     .from("stores")
     .select("id")
     .eq("id", storeId)
     .eq("user_id", userId)
     .single();
+  // PGRST116 = row not found (expected when ownership fails)
+  if (error && error.code !== "PGRST116") throw new Error("db_error");
   return data;
 }
 
@@ -30,15 +32,16 @@ async function assertProductOwnership(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
   productId: string,
-) {
+): Promise<string | null> {
   // Single round-trip: inner join filters out products whose store doesn't belong to userId
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("products")
     .select("store_id, stores!inner(id)")
     .eq("id", productId)
     .eq("stores.user_id", userId)
     .single();
-
+  // PGRST116 = row not found (expected when ownership fails)
+  if (error && error.code !== "PGRST116") throw new Error("db_error");
   return data ? data.store_id : null;
 }
 
@@ -87,7 +90,12 @@ export async function createProduct(storeId: string, formData: FormData) {
   if (!user) return { error: "Não autorizado" };
 
   // Verify the storeId belongs to the current user
-  const store = await assertStoreOwnership(supabase, user.id, storeId);
+  let store;
+  try {
+    store = await assertStoreOwnership(supabase, user.id, storeId);
+  } catch {
+    return { error: "Erro interno. Tente novamente." };
+  }
   if (!store) return { error: "Não autorizado" };
 
   // Enforce plan limit
@@ -161,11 +169,12 @@ export async function updateProduct(productId: string, formData: FormData) {
   if (!user) return { error: "Não autorizado" };
 
   // Verify the product belongs to a store owned by the current user
-  const ownedStoreId = await assertProductOwnership(
-    supabase,
-    user.id,
-    productId,
-  );
+  let ownedStoreId;
+  try {
+    ownedStoreId = await assertProductOwnership(supabase, user.id, productId);
+  } catch {
+    return { error: "Erro interno. Tente novamente." };
+  }
   if (!ownedStoreId) return { error: "Não autorizado" };
 
   const name = (formData.get("name") as string)?.trim();
@@ -212,11 +221,12 @@ export async function deleteProduct(productId: string) {
   if (!user) return { error: "Não autorizado" };
 
   // Verify the product belongs to a store owned by the current user
-  const ownedStoreId = await assertProductOwnership(
-    supabase,
-    user.id,
-    productId,
-  );
+  let ownedStoreId;
+  try {
+    ownedStoreId = await assertProductOwnership(supabase, user.id, productId);
+  } catch {
+    return { error: "Erro interno. Tente novamente." };
+  }
   if (!ownedStoreId) return { error: "Não autorizado" };
 
   const { error } = await supabase
