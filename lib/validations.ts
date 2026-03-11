@@ -42,7 +42,12 @@ export function validateProductName(name: string): ValidationResult {
 }
 
 export function validatePrice(priceStr: string): ValidationResult {
-  const price = parseFloat(priceStr);
+  const trimmed = priceStr?.trim();
+  // Reject partial numeric strings like "10abc" that parseFloat would silently accept
+  if (!/^\d+(\.\d+)?$/.test(trimmed)) {
+    return { ok: false, error: "Preço inválido." };
+  }
+  const price = Number(trimmed);
   if (isNaN(price) || price < 0) return { ok: false, error: "Preço inválido." };
   if (price > 999999.99) return { ok: false, error: "Preço muito alto." };
   return { ok: true };
