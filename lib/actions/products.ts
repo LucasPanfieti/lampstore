@@ -50,6 +50,7 @@ async function uploadImage(
   const check = validateImageFile(file);
   if (!check.ok) return { error: check.error };
 
+  // Derive extension exclusively from the validated MIME type — never trust file.name
   const mimeToExt: Record<string, string> = {
     "image/jpeg": "jpg",
     "image/png": "png",
@@ -57,12 +58,7 @@ async function uploadImage(
     "image/gif": "gif",
   };
 
-  const nameParts = file.name.split(".");
-  const fileExt =
-    nameParts.length > 1
-      ? nameParts[nameParts.length - 1].toLowerCase()
-      : mimeToExt[file.type];
-
+  const fileExt = mimeToExt[file.type];
   if (!fileExt) {
     return { error: "Não foi possível determinar a extensão da imagem." };
   }
