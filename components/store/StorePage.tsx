@@ -18,7 +18,6 @@ import {
   X,
   MessageCircle,
   Package,
-  Zap,
   ExternalLink,
 } from "lucide-react";
 

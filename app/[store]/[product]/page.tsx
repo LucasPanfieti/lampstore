@@ -9,7 +9,7 @@ import {
   buildWhatsAppUrl,
   buildSingleProductMessage,
 } from "@/lib/utils";
-import { ArrowLeft, Package, Zap } from "lucide-react";
+import { ArrowLeft, Package } from "lucide-react";
 import WhatsAppBuyButton from "@/components/store/WhatsAppBuyButton";
 import { getStoreBySlug, getProductBySlug } from "@/lib/queries/store";
 
