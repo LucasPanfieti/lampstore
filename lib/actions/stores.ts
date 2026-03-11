@@ -20,14 +20,16 @@ export async function createStore(formData: FormData) {
   if (!user) return { error: "Não autorizado" };
 
   const name = (formData.get("name") as string)?.trim();
-  const slug = slugify((formData.get("slug") as string) || name);
   const whatsapp = (formData.get("whatsapp") as string)?.trim();
   const bio = (formData.get("bio") as string)?.trim();
   const theme_color = (formData.get("theme_color") as string) || "#7723A4";
   const button_color = (formData.get("button_color") as string) || "#7723A4";
 
+  // Validate name before deriving slug to avoid slugify() receiving undefined
   const nameCheck = validateStoreName(name);
   if (!nameCheck.ok) return { error: nameCheck.error };
+
+  const slug = slugify((formData.get("slug") as string) || name);
 
   const whatsappCheck = validateWhatsApp(whatsapp);
   if (!whatsappCheck.ok) return { error: whatsappCheck.error };
