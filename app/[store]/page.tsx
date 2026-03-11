@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { after } from "next/server";
 import { trackEvent } from "@/lib/actions/analytics";
 import StorePage from "@/components/store/StorePage";
-import { Store, Product } from "@/types";
+import { getStoreBySlug, getActiveStoreProducts } from "@/lib/queries/store";
 
 interface Props {
   params: Promise<{ store: string }>;
@@ -11,14 +11,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { store: storeSlug } = await params;
-  const supabase = await createClient();
-
-  const { data: storeData } = await supabase
-    .from("stores")
-    .select("*")
-    .eq("slug", storeSlug)
-    .single();
-  const store = storeData as Store | null;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) {
     return { title: "Loja não encontrada — LampStore" };
@@ -37,28 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function StorePageRoute({ params }: Props) {
   const { store: storeSlug } = await params;
-  const supabase = await createClient();
-
-  // Fetch store and products
-  const { data: storeData2 } = await supabase
-    .from("stores")
-    .select("*")
-    .eq("slug", storeSlug)
-    .single();
-  const store = storeData2 as Store | null;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) notFound();
 
-  const { data: productsData } = await supabase
-    .from("products")
-    .select("*")
-    .eq("store_id", store!.id)
-    .eq("active", true)
-    .order("created_at", { ascending: false });
-  const products = productsData as Product[] | null;
+  const products = await getActiveStoreProducts(store.id);
 
-  // Track store view
-  await trackEvent(store!.id, "store_view");
+  // Non-blocking analytics tracking — does not delay page render
+  after(() => trackEvent(store.id, "store_view"));
 
-  return <StorePage store={store!} products={products ?? []} />;
+  return <StorePage store={store} products={products} />;
 }

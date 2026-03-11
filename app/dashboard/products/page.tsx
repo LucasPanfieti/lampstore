@@ -6,6 +6,7 @@ import { Plus, Package, Pencil } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import DeleteProductButton from "@/components/dashboard/DeleteProductButton";
 import { Store, Product } from "@/types";
+import { PLAN } from "@/lib/constants";
 
 export default async function ProductsPage() {
   const supabase = await createClient();
@@ -31,7 +32,7 @@ export default async function ProductsPage() {
     .order("created_at", { ascending: false });
   const products = productsData as Product[] | null;
 
-  const FREE_LIMIT = 5;
+  const FREE_LIMIT = PLAN.FREE.PRODUCT_LIMIT;
   const productCount = products?.length ?? 0;
   const canAdd = productCount < FREE_LIMIT;
 

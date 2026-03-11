@@ -35,7 +35,7 @@ export default function ProductForm({ storeId, product }: ProductFormProps) {
     setError(null);
 
     const result = product
-      ? await updateProduct(product.id, storeId, formData)
+      ? await updateProduct(product.id, formData)
       : await createProduct(storeId, formData);
 
     if (result.error) {

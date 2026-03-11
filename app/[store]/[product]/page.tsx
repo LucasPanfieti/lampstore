@@ -2,16 +2,16 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { after } from "next/server";
 import { trackEvent } from "@/lib/actions/analytics";
 import {
   formatCurrency,
   buildWhatsAppUrl,
   buildSingleProductMessage,
 } from "@/lib/utils";
-import { ArrowLeft, Package, Zap } from "lucide-react";
-import { Store, Product } from "@/types";
+import { ArrowLeft, Package } from "lucide-react";
 import WhatsAppBuyButton from "@/components/store/WhatsAppBuyButton";
+import { getStoreBySlug, getProductBySlug } from "@/lib/queries/store";
 
 interface Props {
   params: Promise<{ store: string; product: string }>;
@@ -19,24 +19,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { store: storeSlug, product: productSlug } = await params;
-  const supabase = await createClient();
-
-  const { data: storeData } = await supabase
-    .from("stores")
-    .select("*")
-    .eq("slug", storeSlug)
-    .single();
-  const store = storeData as Store | null;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) return { title: "Produto não encontrado" };
 
-  const { data: productData } = await supabase
-    .from("products")
-    .select("*")
-    .eq("store_id", store.id)
-    .eq("slug", productSlug)
-    .single();
-  const product = productData as Product | null;
+  const product = await getProductBySlug(store.id, productSlug);
 
   if (!product) return { title: "Produto não encontrado" };
 
@@ -57,29 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { store: storeSlug, product: productSlug } = await params;
-  const supabase = await createClient();
-
-  const { data: storeData2 } = await supabase
-    .from("stores")
-    .select("*")
-    .eq("slug", storeSlug)
-    .single();
-  const store = storeData2 as Store | null;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) notFound();
 
-  const { data: productData2 } = await supabase
-    .from("products")
-    .select("*")
-    .eq("store_id", store!.id)
-    .eq("slug", productSlug)
-    .single();
-  const product = productData2 as Product | null;
+  const product = await getProductBySlug(store.id, productSlug);
 
   if (!product) notFound();
 
-  // Track product view
-  await trackEvent(store.id, "product_view", { product_id: product.id });
+  // Non-blocking analytics tracking — does not delay page render
+  after(() => trackEvent(store.id, "product_view", { product_id: product.id }));
 
   const themeColor = store.theme_color || "#7723A4";
 

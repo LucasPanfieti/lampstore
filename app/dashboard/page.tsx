@@ -13,6 +13,7 @@ import {
 import CreateStoreForm from "@/components/dashboard/CreateStoreForm";
 import { Store, Product } from "@/types";
 import CopyButtonClient from "@/components/dashboard/CopyButtonClient";
+import { PLAN } from "@/lib/constants";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -56,7 +57,7 @@ export default async function DashboardPage() {
     );
   }
 
-  const FREE_LIMIT = 5;
+  const FREE_LIMIT = PLAN.FREE.PRODUCT_LIMIT;
   const productCount = products?.length ?? 0;
 
   return (
