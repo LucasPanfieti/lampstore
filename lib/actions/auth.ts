@@ -3,16 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { validateEmail, validatePassword } from "@/lib/validations";
 
 export async function login(formData: FormData) {
+  const email = (formData.get("email") as string)?.trim();
+  const password = formData.get("password") as string;
+
+  const emailCheck = validateEmail(email);
+  if (!emailCheck.ok) return { error: emailCheck.error };
+
+  const passwordCheck = validatePassword(password);
+  if (!passwordCheck.ok) return { error: passwordCheck.error };
+
   const supabase = await createClient();
-
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { error: error.message };
@@ -23,11 +27,16 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const supabase = await createClient();
-
-  const email = formData.get("email") as string;
+  const email = (formData.get("email") as string)?.trim();
   const password = formData.get("password") as string;
 
+  const emailCheck = validateEmail(email);
+  if (!emailCheck.ok) return { error: emailCheck.error };
+
+  const passwordCheck = validatePassword(password);
+  if (!passwordCheck.ok) return { error: passwordCheck.error };
+
+  const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password,

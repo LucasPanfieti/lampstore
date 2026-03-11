@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { cache } from "react";
+import { after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { trackEvent } from "@/lib/actions/analytics";
 import {
@@ -17,26 +19,35 @@ interface Props {
   params: Promise<{ store: string; product: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { store: storeSlug, product: productSlug } = await params;
+// cache() deduplicates DB calls between generateMetadata and the page render
+const getStoreBySlug = cache(async (storeSlug: string) => {
   const supabase = await createClient();
-
-  const { data: storeData } = await supabase
+  const { data } = await supabase
     .from("stores")
     .select("*")
     .eq("slug", storeSlug)
     .single();
-  const store = storeData as Store | null;
+  return data as Store | null;
+});
+
+const getProductBySlug = cache(async (storeId: string, productSlug: string) => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .eq("store_id", storeId)
+    .eq("slug", productSlug)
+    .single();
+  return data as Product | null;
+});
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { store: storeSlug, product: productSlug } = await params;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) return { title: "Produto não encontrado" };
 
-  const { data: productData } = await supabase
-    .from("products")
-    .select("*")
-    .eq("store_id", store.id)
-    .eq("slug", productSlug)
-    .single();
-  const product = productData as Product | null;
+  const product = await getProductBySlug(store.id, productSlug);
 
   if (!product) return { title: "Produto não encontrado" };
 
@@ -57,29 +68,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { store: storeSlug, product: productSlug } = await params;
-  const supabase = await createClient();
-
-  const { data: storeData2 } = await supabase
-    .from("stores")
-    .select("*")
-    .eq("slug", storeSlug)
-    .single();
-  const store = storeData2 as Store | null;
+  const store = await getStoreBySlug(storeSlug);
 
   if (!store) notFound();
 
-  const { data: productData2 } = await supabase
-    .from("products")
-    .select("*")
-    .eq("store_id", store!.id)
-    .eq("slug", productSlug)
-    .single();
-  const product = productData2 as Product | null;
+  const product = await getProductBySlug(store.id, productSlug);
 
   if (!product) notFound();
 
-  // Track product view
-  await trackEvent(store.id, "product_view", { product_id: product.id });
+  // Non-blocking analytics tracking — does not delay page render
+  after(() => trackEvent(store.id, "product_view", { product_id: product.id }));
 
   const themeColor = store.theme_color || "#7723A4";
 
