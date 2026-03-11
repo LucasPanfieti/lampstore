@@ -30,6 +30,11 @@ export async function createStore(formData: FormData) {
   if (!nameCheck.ok) return { error: nameCheck.error };
 
   const slug = slugify((formData.get("slug") as string) || name);
+  if (!slug || slug.length > VALIDATION.SLUG_MAX) {
+    return {
+      error: `Nome da loja inválido para URL. Use apenas letras, números e hífens, com no máximo ${VALIDATION.SLUG_MAX} caracteres.`,
+    };
+  }
 
   const whatsappCheck = validateWhatsApp(whatsapp);
   if (!whatsappCheck.ok) return { error: whatsappCheck.error };
