@@ -57,7 +57,23 @@ async function uploadImage(
   const check = validateImageFile(file);
   if (!check.ok) return { error: check.error };
 
-  const fileExt = file.name.split(".").pop()?.toLowerCase();
+  const mimeToExt: Record<string, string> = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp",
+    "image/gif": "gif",
+  };
+
+  const nameParts = file.name.split(".");
+  const fileExt =
+    nameParts.length > 1
+      ? nameParts[nameParts.length - 1].toLowerCase()
+      : mimeToExt[file.type];
+
+  if (!fileExt) {
+    return { error: "Não foi possível determinar a extensão da imagem." };
+  }
+
   const fileName = `${storeId}/${Date.now()}.${fileExt}`;
 
   const { data: uploadData, error: uploadError } = await supabase.storage
