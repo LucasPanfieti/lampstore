@@ -99,10 +99,12 @@ export async function createProduct(storeId: string, formData: FormData) {
   if (!store) return { error: "Não autorizado" };
 
   // Enforce plan limit
-  const { count } = await supabase
+  const { count, error: countError } = await supabase
     .from("products")
     .select("*", { count: "exact", head: true })
     .eq("store_id", storeId);
+
+  if (countError) return { error: "Erro interno. Tente novamente." };
 
   if ((count ?? 0) >= PLAN.FREE.PRODUCT_LIMIT) {
     return {
