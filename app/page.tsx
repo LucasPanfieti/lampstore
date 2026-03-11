@@ -16,19 +16,23 @@ export default function HomePage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <Image
                 src="/logo_lampstore.webp"
                 alt="LampStore"
-                width={32}
-                height={32}
+                width={48}
+                height={48}
                 className="rounded-lg"
               />
               <span
-                className="text-xl font-bold text-gray-900"
-                style={{ fontFamily: "'DM Serif Display', serif" }}
+                className="text-xl"
+                style={{
+                  fontFamily: "var(--font-nunito), sans-serif",
+                  fontWeight: 800,
+                }}
               >
-                LampStore
+                <span style={{ color: "#1e1b4b" }}>Lamp</span>
+                <span style={{ color: "#7723A4" }}>Store</span>
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -466,19 +470,22 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Image
               src="/logo_lampstore.webp"
               alt="LampStore"
-              width={28}
-              height={28}
+              width={44}
+              height={44}
               className="rounded-lg"
             />
             <span
-              className="font-bold text-gray-900"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
+              style={{
+                fontFamily: "var(--font-nunito), sans-serif",
+                fontWeight: 800,
+              }}
             >
-              LampStore
+              <span style={{ color: "#1e1b4b" }}>Lamp</span>
+              <span style={{ color: "#7723A4" }}>Store</span>
             </span>
           </div>
           <p className="text-sm text-gray-400">

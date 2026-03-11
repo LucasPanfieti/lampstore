@@ -30,19 +30,23 @@ export default function DashboardSidebar({ store }: { store: Store | null }) {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-gray-100">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-1">
           <Image
             src="/logo_lampstore.webp"
             alt="LampStore"
-            width={32}
-            height={32}
+            width={48}
+            height={48}
             className="rounded-lg"
           />
           <span
-            className="text-xl font-bold text-gray-900"
-            style={{ fontFamily: "'DM Serif Display', serif" }}
+            className="text-xl"
+            style={{
+              fontFamily: "var(--font-nunito), sans-serif",
+              fontWeight: 800,
+            }}
           >
-            LampStore
+            <span style={{ color: "#1e1b4b" }}>Lamp</span>
+            <span style={{ color: "#7723A4" }}>Store</span>
           </span>
         </Link>
       </div>

@@ -9,19 +9,23 @@ export default function AuthLayout({
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 flex flex-col">
       <nav className="p-6">
-        <Link href="/" className="flex items-center gap-2 w-fit">
+        <Link href="/" className="flex items-center gap-1 w-fit">
           <Image
             src="/logo_lampstore.webp"
             alt="LampStore"
-            width={32}
-            height={32}
+            width={48}
+            height={48}
             className="rounded-lg"
           />
           <span
-            className="text-xl font-bold text-gray-900"
-            style={{ fontFamily: "'DM Serif Display', serif" }}
+            className="text-xl"
+            style={{
+              fontFamily: "var(--font-nunito), sans-serif",
+              fontWeight: 800,
+            }}
           >
-            LampStore
+            <span style={{ color: "#1e1b4b" }}>Lamp</span>
+            <span style={{ color: "#7723A4" }}>Store</span>
           </span>
         </Link>
       </nav>

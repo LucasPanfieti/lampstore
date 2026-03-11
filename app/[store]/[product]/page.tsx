@@ -186,12 +186,20 @@ export default async function ProductPage({ params }: Props) {
           <Image
             src="/logo_lampstore.webp"
             alt="LampStore"
-            width={20}
-            height={20}
+            width={36}
+            height={36}
             className="rounded"
           />
           Crie sua loja grátis no{" "}
-          <span className="font-semibold text-gray-600">LampStore</span>
+          <span
+            style={{
+              fontFamily: "var(--font-nunito), sans-serif",
+              fontWeight: 800,
+            }}
+          >
+            <span style={{ color: "#1e1b4b" }}>Lamp</span>
+            <span style={{ color: "#7723A4" }}>Store</span>
+          </span>
         </Link>
       </footer>
     </div>

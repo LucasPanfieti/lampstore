@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, DM_Serif_Display } from "next/font/google";
+import { Sora, DM_Serif_Display, Nunito } from "next/font/google";
 import "./globals.css";
 
 const sora = Sora({
@@ -14,6 +14,13 @@ const dmSerifDisplay = DM_Serif_Display({
   weight: "400",
   style: ["normal", "italic"],
   variable: "--font-dm-serif",
+  display: "swap",
+});
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["800"],
+  variable: "--font-nunito",
   display: "swap",
 });
 
@@ -39,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${sora.variable} ${dmSerifDisplay.variable}`}
+      className={`${sora.variable} ${dmSerifDisplay.variable} ${nunito.variable}`}
     >
       <body className="font-sans antialiased">{children}</body>
     </html>
