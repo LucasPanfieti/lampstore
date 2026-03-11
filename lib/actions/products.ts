@@ -121,7 +121,7 @@ export async function createProduct(storeId: string, formData: FormData) {
   const priceCheck = validatePrice(priceStr);
   if (!priceCheck.ok) return { error: priceCheck.error };
 
-  const price = parseFloat(priceStr);
+  const price = parseFloat((priceStr ?? "").replace(",", "."));
 
   let image_url: string | null = null;
   if (imageFile && imageFile.size > 0) {
@@ -188,7 +188,7 @@ export async function updateProduct(productId: string, formData: FormData) {
   const priceCheck = validatePrice(priceStr);
   if (!priceCheck.ok) return { error: priceCheck.error };
 
-  const price = parseFloat(priceStr);
+  const price = parseFloat((priceStr ?? "").replace(",", "."));
 
   let image_url: string | undefined = undefined;
   if (imageFile && imageFile.size > 0) {

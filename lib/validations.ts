@@ -53,11 +53,11 @@ export function validatePrice(
   priceStr: string | null | undefined,
 ): ValidationResult {
   const trimmed = priceStr?.trim();
-  // Reject partial numeric strings like "10abc" that parseFloat would silently accept
-  if (!trimmed || !/^\d+(\.\d+)?$/.test(trimmed)) {
+  // Support pt-BR comma separator; allow at most 2 fractional digits to match decimal(10,2)
+  if (!trimmed || !/^\d+(?:[.,]\d{1,2})?$/.test(trimmed)) {
     return { ok: false, error: "Preço inválido." };
   }
-  const price = Number(trimmed);
+  const price = Number(trimmed.replace(",", "."));
   if (isNaN(price) || price < 0) return { ok: false, error: "Preço inválido." };
   if (price > 999999.99) return { ok: false, error: "Preço muito alto." };
   return { ok: true };
