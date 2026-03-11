@@ -149,7 +149,6 @@ export async function createProduct(storeId: string, formData: FormData) {
 
 export async function updateProduct(
   productId: string,
-  storeId: string,
   formData: FormData,
 ) {
   const supabase = await createClient();
