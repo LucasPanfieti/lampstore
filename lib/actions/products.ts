@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils";
-import { PLAN } from "@/lib/constants";
+import { PLAN, VALIDATION } from "@/lib/constants";
 import {
   validateProductName,
   validatePrice,
