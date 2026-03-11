@@ -202,3 +202,12 @@ create policy "Authenticated users can delete product images"
   on storage.objects for delete
   to authenticated
   using (bucket_id = 'product-images');
+
+-- Auto-delete analytics older than 60 days (run in Supabase SQL Editor separately)
+-- Requires pg_cron extension (enabled in Supabase Dashboard > Database > Extensions)
+--
+-- select cron.schedule(
+--   'delete-old-analytics',
+--   '0 3 * * *',
+--   $$delete from public.analytics where created_at < now() - interval '60 days'$$
+-- );
