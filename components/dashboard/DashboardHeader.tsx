@@ -17,7 +17,7 @@ export default function DashboardHeader({
 
   return (
     <header className="bg-white border-b border-gray-100 px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between lg:justify-end">
-      <div className="lg:hidden w-8" /> {/* Spacer for mobile menu button */}
+      <div className="lg:hidden w-12" /> {/* Spacer for mobile menu button */}
       <div className="flex items-center gap-3">
         {store && (
           <div className="hidden sm:block text-right">

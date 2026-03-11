@@ -26,7 +26,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <DashboardSidebar store={store} />
-      <div className="flex-1 flex flex-col min-h-screen lg:ml-64">
+      <div className="flex-1 flex flex-col min-h-screen lg:ml-64 min-w-0 overflow-hidden">
         <DashboardHeader user={user} store={store} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl w-full mx-auto">
           {children}

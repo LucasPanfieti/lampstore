@@ -3,11 +3,27 @@
 import { useState } from "react";
 import { updateStore } from "@/lib/actions/stores";
 import { Store } from "@/types";
-import { Loader2, Store as StoreIcon, Phone, FileText, Palette, Copy, Check } from "lucide-react";
+import {
+  Loader2,
+  Store as StoreIcon,
+  Phone,
+  FileText,
+  Palette,
+  Copy,
+  Check,
+} from "lucide-react";
 
 const THEME_COLORS = [
-  "#f97316", "#ef4444", "#8b5cf6", "#3b82f6", "#10b981",
-  "#f59e0b", "#ec4899", "#06b6d4", "#84cc16", "#6366f1",
+  "#f97316",
+  "#ef4444",
+  "#8b5cf6",
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ec4899",
+  "#06b6d4",
+  "#84cc16",
+  "#6366f1",
 ];
 
 export default function StoreSettingsForm({ store }: { store: Store }) {
@@ -47,8 +63,12 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
       {/* Store link */}
       <div className="bg-purple-50 rounded-2xl p-5 space-y-3">
         <div>
-          <h3 className="font-semibold text-gray-900 text-sm">Link da sua loja</h3>
-          <p className="text-xs text-gray-500 mt-0.5">Compartilhe este link na sua bio</p>
+          <h3 className="font-semibold text-gray-900 text-sm">
+            Link da sua loja
+          </h3>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Compartilhe este link na sua bio
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex-1 bg-white rounded-xl px-4 py-2.5 text-sm text-gray-700 font-medium truncate border border-purple-100">
@@ -59,13 +79,20 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             onClick={handleCopy}
             className="flex items-center gap-1.5 bg-purple-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-purple-600 transition-all whitespace-nowrap"
           >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
             {copied ? "Copiado!" : "Copiar"}
           </button>
         </div>
       </div>
 
-      <form action={handleSubmit} className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 space-y-6">
+      <form
+        action={handleSubmit}
+        className="bg-white rounded-3xl border border-gray-100 shadow-sm p-5 sm:p-8 space-y-6"
+      >
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
             <StoreIcon className="w-4 h-4 text-gray-400" />
@@ -92,7 +119,9 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             placeholder="5511999999999"
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
-          <p className="text-xs text-gray-400">Formato: código do país + DDD + número (sem espaços)</p>
+          <p className="text-xs text-gray-400">
+            Formato: código do país + DDD + número (sem espaços)
+          </p>
         </div>
 
         <div className="space-y-1">
@@ -124,7 +153,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
                 style={{
                   backgroundColor: color,
                   borderColor: themeColor === color ? color : "transparent",
-                  boxShadow: themeColor === color ? `0 0 0 3px white, 0 0 0 5px ${color}` : "none",
+                  boxShadow:
+                    themeColor === color
+                      ? `0 0 0 3px white, 0 0 0 5px ${color}`
+                      : "none",
                 }}
               />
             ))}
@@ -146,7 +178,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
                 style={{
                   backgroundColor: color,
                   borderColor: buttonColor === color ? color : "transparent",
-                  boxShadow: buttonColor === color ? `0 0 0 3px white, 0 0 0 5px ${color}` : "none",
+                  boxShadow:
+                    buttonColor === color
+                      ? `0 0 0 3px white, 0 0 0 5px ${color}`
+                      : "none",
                 }}
               />
             ))}
@@ -156,7 +191,9 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
 
         {/* Preview */}
         <div className="bg-gray-50 rounded-2xl p-4 space-y-2">
-          <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Preview</p>
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Preview
+          </p>
           <div className="flex items-center gap-3">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
@@ -165,7 +202,9 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
               {store.name[0]}
             </div>
             <div>
-              <div className="font-semibold text-sm text-gray-900">{store.name}</div>
+              <div className="font-semibold text-sm text-gray-900">
+                {store.name}
+              </div>
             </div>
             <button
               type="button"

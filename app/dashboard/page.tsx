@@ -113,7 +113,7 @@ export default async function DashboardPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Últimos 30 dias
           </h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
                 label: "Visitas",
@@ -189,15 +189,15 @@ export default async function DashboardPage() {
       )}
 
       {/* Share link */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl p-6 space-y-4">
+      <div className="bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl p-6 space-y-4 overflow-hidden w-full">
         <div>
           <h3 className="text-lg font-bold text-white">Compartilhe sua loja</h3>
           <p className="text-purple-100 text-sm mt-1">
             Coloque este link na bio do Instagram ou TikTok
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex-1 bg-white/20 rounded-xl px-4 py-2.5 text-white text-sm font-medium truncate">
+        <div className="flex items-center gap-3 w-full min-w-0">
+          <div className="flex-1 min-w-0 bg-white/20 rounded-xl px-4 py-2.5 text-white text-sm font-medium truncate overflow-hidden">
             {process.env.NEXT_PUBLIC_APP_URL}/{store.slug}
           </div>
           <CopyButton
