@@ -31,22 +31,15 @@ async function assertProductOwnership(
   userId: string,
   productId: string,
 ) {
-  const { data: product } = await supabase
+  // Single round-trip: inner join filters out products whose store doesn't belong to userId
+  const { data } = await supabase
     .from("products")
-    .select("store_id")
+    .select("store_id, stores!inner(id)")
     .eq("id", productId)
+    .eq("stores.user_id", userId)
     .single();
 
-  if (!product) return null;
-
-  const { data: store } = await supabase
-    .from("stores")
-    .select("id")
-    .eq("id", product.store_id)
-    .eq("user_id", userId)
-    .single();
-
-  return store ? product.store_id : null;
+  return data ? data.store_id : null;
 }
 
 async function uploadImage(
