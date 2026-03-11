@@ -89,8 +89,8 @@ export async function updateStore(storeId: string, formData: FormData) {
   const name = (formData.get("name") as string)?.trim();
   const whatsapp = (formData.get("whatsapp") as string)?.trim();
   const bio = (formData.get("bio") as string)?.trim();
-  const theme_color = formData.get("theme_color") as string;
-  const button_color = formData.get("button_color") as string;
+  const theme_color = (formData.get("theme_color") as string) || "#7723A4";
+  const button_color = (formData.get("button_color") as string) || "#7723A4";
 
   const nameCheck = validateStoreName(name);
   if (!nameCheck.ok) return { error: nameCheck.error };
