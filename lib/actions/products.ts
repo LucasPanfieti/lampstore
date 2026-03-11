@@ -133,6 +133,17 @@ export async function createProduct(storeId: string, formData: FormData) {
   }
 
   const slug = slugify(name);
+  if (!slug) {
+    return {
+      error:
+        "Não foi possível gerar um identificador para este produto. Use um nome com letras ou números.",
+    };
+  }
+  if (slug.length > VALIDATION.SLUG_MAX) {
+    return {
+      error: `O nome do produto é muito longo. Tente um nome com até ${VALIDATION.SLUG_MAX} caracteres.`,
+    };
+  }
   let finalSlug = slug;
   const { data: existing } = await supabase
     .from("products")
