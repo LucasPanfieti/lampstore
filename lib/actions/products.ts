@@ -63,11 +63,12 @@ async function uploadImage(
     return { error: "Não foi possível determinar a extensão da imagem." };
   }
 
-  const fileName = `${storeId}/${Date.now()}.${fileExt}`;
+  // crypto.randomUUID() avoids collisions from parallel uploads in the same millisecond
+  const fileName = `${storeId}/${crypto.randomUUID()}.${fileExt}`;
 
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("product-images")
-    .upload(fileName, file, { upsert: true });
+    .upload(fileName, file, { upsert: false });
 
   if (uploadError) return { error: "Erro ao fazer upload da imagem." };
 
@@ -152,10 +153,7 @@ export async function createProduct(storeId: string, formData: FormData) {
   return { data };
 }
 
-export async function updateProduct(
-  productId: string,
-  formData: FormData,
-) {
+export async function updateProduct(productId: string, formData: FormData) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -163,7 +161,11 @@ export async function updateProduct(
   if (!user) return { error: "Não autorizado" };
 
   // Verify the product belongs to a store owned by the current user
-  const ownedStoreId = await assertProductOwnership(supabase, user.id, productId);
+  const ownedStoreId = await assertProductOwnership(
+    supabase,
+    user.id,
+    productId,
+  );
   if (!ownedStoreId) return { error: "Não autorizado" };
 
   const name = (formData.get("name") as string)?.trim();
@@ -210,7 +212,11 @@ export async function deleteProduct(productId: string) {
   if (!user) return { error: "Não autorizado" };
 
   // Verify the product belongs to a store owned by the current user
-  const ownedStoreId = await assertProductOwnership(supabase, user.id, productId);
+  const ownedStoreId = await assertProductOwnership(
+    supabase,
+    user.id,
+    productId,
+  );
   if (!ownedStoreId) return { error: "Não autorizado" };
 
   const { error } = await supabase
