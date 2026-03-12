@@ -111,8 +111,8 @@ export default function StorePage({ store, products }: StorePageProps) {
 
             <div className="space-y-2">
               <h1
-                className="text-2xl sm:text-3xl font-bold text-gray-900"
-                style={{ fontFamily: "'DM Serif Display', serif" }}
+                className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
                 {store.name}
               </h1>
@@ -252,7 +252,7 @@ export default function StorePage({ store, products }: StorePageProps) {
       {cartCount > 0 && (
         <button
           onClick={() => setCartOpen(true)}
-          className="fixed bottom-6 right-6 text-white font-bold px-5 py-4 rounded-2xl shadow-xl flex items-center gap-3 hover:opacity-90 transition-all"
+          className="fixed bottom-6 right-6 text-white font-bold px-5 py-4 rounded-2xl shadow-xl flex items-center gap-3 hover:opacity-90 transition-all z-40"
           style={{ backgroundColor: themeColor }}
         >
           <div className="relative">
@@ -377,7 +377,7 @@ export default function StorePage({ store, products }: StorePageProps) {
       )}
 
       {/* Footer branding */}
-      <footer className="py-8 text-center">
+      <footer className="py-2 bg-white border-t border-gray-100 text-center">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"

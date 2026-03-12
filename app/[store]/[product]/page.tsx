@@ -3,13 +3,13 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { after } from "next/server";
-import { trackEvent } from "@/lib/actions/analytics";
+import { insertAnalyticsEvent } from "@/lib/actions/analytics";
 import {
   formatCurrency,
   buildWhatsAppUrl,
   buildSingleProductMessage,
 } from "@/lib/utils";
-import { ArrowLeft, Package } from "lucide-react";
+import { ArrowLeft, Package, ExternalLink } from "lucide-react";
 import WhatsAppBuyButton from "@/components/store/WhatsAppBuyButton";
 import { getStoreBySlug, getProductBySlug } from "@/lib/queries/store";
 
@@ -52,8 +52,11 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) notFound();
 
-  // Non-blocking analytics tracking — does not delay page render
-  after(() => trackEvent(store.id, "product_view", { product_id: product.id }));
+  after(() =>
+    insertAnalyticsEvent(store.id, "product_view", {
+      product_id: product.id,
+    }),
+  );
 
   const themeColor = store.theme_color || "#7723A4";
 
@@ -152,7 +155,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {/* Footer branding */}
-      <footer className="py-8 text-center">
+      <footer className="py-2 bg-white border-t border-gray-100 text-center">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
@@ -174,6 +177,7 @@ export default async function ProductPage({ params }: Props) {
             <span style={{ color: "#1e1b4b" }}>Lamp</span>
             <span style={{ color: "#7723A4" }}>Store</span>
           </span>
+          <ExternalLink className="w-3 h-3" />
         </Link>
       </footer>
     </div>

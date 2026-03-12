@@ -1,15 +1,17 @@
-"use server";
-
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAnonClient } from "@/lib/supabase/server";
 import { Json } from "@/types";
 
-export async function trackEvent(
+/**
+ * Plain server-side helper — uses a cookie-free anon client internally.
+ * Safe to call inside `after()` without blocking the render path.
+ * Not a Server Action: never import this in Client Components.
+ */
+export async function insertAnalyticsEvent(
   storeId: string,
   eventType: "store_view" | "whatsapp_click" | "product_view",
   metadata?: Record<string, Json>,
 ) {
-  const supabase = await createClient();
-
+  const supabase = createAnonClient();
   await supabase.from("analytics").insert({
     store_id: storeId,
     event_type: eventType,
@@ -17,7 +19,20 @@ export async function trackEvent(
   });
 }
 
+/** Server Action — serializable args only, safe to call from Client Components. */
+export async function trackEvent(
+  storeId: string,
+  eventType: "store_view" | "whatsapp_click" | "product_view",
+  metadata?: Record<string, Json>,
+) {
+  "use server";
+  const supabase = await createClient();
+  await insertAnalyticsEvent(supabase, storeId, eventType, metadata);
+}
+
+/** Server Action — safe to call from Client Components. */
 export async function getStoreAnalytics(storeId: string) {
+  "use server";
   const supabase = await createClient();
 
   const thirtyDaysAgo = new Date();
