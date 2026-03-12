@@ -68,18 +68,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
     parseStoredPhone(store.whatsapp),
   );
 
-  const phoneDisplay =
-    phoneDigits.length > 0
-      ? `+55 ${formatBRPhone(phoneDigits)}`
-      : "";
+  const phoneDisplay = formatBRPhone(phoneDigits);
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    // Strip the fixed "+55 " prefix, keep only digits, max 11 (2 DDD + 9 mobile)
-    const afterPrefix = value.startsWith("+55 ")
-      ? value.slice(4)
-      : value.replace(/^\+?55\s?/, "");
-    const digits = afterPrefix.replace(/\D/g, "").slice(0, 11);
+    const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
     setPhoneDigits(digits);
   }
 
@@ -161,14 +153,19 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             <Phone className="w-4 h-4 text-gray-400" />
             WhatsApp
           </label>
-          <input
-            type="text"
-            inputMode="tel"
-            value={phoneDisplay}
-            onChange={handlePhoneChange}
-            placeholder="+55 (11) 99999-9999"
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          />
+          <div className="flex">
+            <span className="flex items-center px-4 py-3 bg-gray-100 border border-r-0 border-gray-200 rounded-l-xl text-sm font-medium text-gray-500 select-none whitespace-nowrap">
+              🇧🇷 +55
+            </span>
+            <input
+              type="text"
+              inputMode="tel"
+              value={phoneDisplay}
+              onChange={handlePhoneChange}
+              placeholder="(11) 99999-9999"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-r-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-w-0"
+            />
+          </div>
           {/* Send clean digits to the server — validation strips non-digits already */}
           <input
             type="hidden"
@@ -176,7 +173,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             value={phoneDigits.length >= 10 ? `55${phoneDigits}` : ""}
           />
           <p className="text-xs text-gray-400">
-            Celular: +55 (11) 99999-9999 · Fixo: +55 (11) 9999-9999
+            Celular: (11) 99999-9999 · Fixo: (11) 9999-9999
           </p>
         </div>
 
