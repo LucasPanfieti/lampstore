@@ -376,8 +376,9 @@ export default function StorePage({ store, products }: StorePageProps) {
         </>
       )}
 
-      {/* Footer branding — fixed at bottom of viewport */}
-      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-30">
+      {/* Footer branding — fixed at bottom, hidden when cart is open */}
+      {!cartOpen && (
+        <footer className="fixed bottom-0 inset-x-0 py-2 bg-white border-t border-gray-100 text-center z-30">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
@@ -402,6 +403,7 @@ export default function StorePage({ store, products }: StorePageProps) {
           <ExternalLink className="w-3 h-3" />
         </Link>
       </footer>
+      )}
     </div>
   );
 }
