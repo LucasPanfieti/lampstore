@@ -1,14 +1,18 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { SupabaseClient } from "@supabase/supabase-js";
 import { Json } from "@/types";
 
 export async function trackEvent(
   storeId: string,
   eventType: "store_view" | "whatsapp_click" | "product_view",
   metadata?: Record<string, Json>,
+  // Accept a pre-built client so this can be called inside after() where
+  // cookies() is not accessible and createClient() would throw.
+  supabaseClient?: SupabaseClient,
 ) {
-  const supabase = await createClient();
+  const supabase = supabaseClient ?? (await createClient());
 
   await supabase.from("analytics").insert({
     store_id: storeId,

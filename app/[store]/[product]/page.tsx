@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { after } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 import { trackEvent } from "@/lib/actions/analytics";
 import {
   formatCurrency,
@@ -52,8 +53,9 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) notFound();
 
-  // Non-blocking analytics tracking — does not delay page render
-  after(() => trackEvent(store.id, "product_view", { product_id: product.id }));
+  // Create the client before after() — cookies() is not available inside it
+  const supabase = await createClient();
+  after(() => trackEvent(store.id, "product_view", { product_id: product.id }, supabase));
 
   const themeColor = store.theme_color || "#7723A4";
 
