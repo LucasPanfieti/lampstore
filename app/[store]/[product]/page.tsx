@@ -55,7 +55,9 @@ export default async function ProductPage({ params }: Props) {
 
   // Create the client before after() — cookies() is not available inside it
   const supabase = await createClient();
-  after(() => trackEvent(store.id, "product_view", { product_id: product.id }, supabase));
+  after(() =>
+    trackEvent(store.id, "product_view", { product_id: product.id }, supabase),
+  );
 
   const themeColor = store.theme_color || "#7723A4";
 
@@ -154,7 +156,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {/* Footer branding — fixed at bottom of viewport */}
-      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-40">
+      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-30">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"

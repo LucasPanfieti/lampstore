@@ -377,7 +377,7 @@ export default function StorePage({ store, products }: StorePageProps) {
       )}
 
       {/* Footer branding — fixed at bottom of viewport */}
-      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-40">
+      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-30">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
