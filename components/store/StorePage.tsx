@@ -90,7 +90,7 @@ export default function StorePage({ store, products }: StorePageProps) {
   const themeColor = store.theme_color || "#7723A4";
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-14">
       {/* Store header */}
       <div
         className="relative"
@@ -376,8 +376,8 @@ export default function StorePage({ store, products }: StorePageProps) {
         </>
       )}
 
-      {/* Footer branding */}
-      <footer className="py-8 text-center">
+      {/* Footer branding — fixed at bottom of viewport */}
+      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-40">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
