@@ -26,6 +26,37 @@ const THEME_COLORS = [
   "#6366f1",
 ];
 
+// Formats the digits after the country code into the Brazilian phone mask.
+// e.g. "11999991234" → "(11) 99999-1234"  /  "1133334444" → "(11) 3333-4444"
+function formatBRPhone(digitsAfterCC: string): string {
+  const ddd = digitsAfterCC.slice(0, 2);
+  const number = digitsAfterCC.slice(2);
+
+  if (ddd.length < 2) return ddd.length === 0 ? "" : `(${ddd}`;
+
+  let display = `(${ddd})`;
+  if (number.length === 0) return display;
+
+  display += ` `;
+  // mobile: first digit is "9" and total number length can reach 9
+  // landline: 8 digits, split at 4
+  const splitAt = number[0] === "9" ? 5 : 4;
+  if (number.length <= splitAt) {
+    display += number;
+  } else {
+    display += `${number.slice(0, splitAt)}-${number.slice(splitAt, splitAt + 4)}`;
+  }
+  return display;
+}
+
+function parseStoredPhone(whatsapp: string | null | undefined): string {
+  if (!whatsapp) return "";
+  const digits = whatsapp.replace(/\D/g, "");
+  // Strip leading country code "55" if present (stored as "5511999991234")
+  if (digits.startsWith("55") && digits.length > 2) return digits.slice(2);
+  return digits;
+}
+
 export default function StoreSettingsForm({ store }: { store: Store }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +64,24 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   const [themeColor, setThemeColor] = useState(store.theme_color);
   const [buttonColor, setButtonColor] = useState(store.button_color);
   const [copied, setCopied] = useState(false);
+  const [phoneDigits, setPhoneDigits] = useState(() =>
+    parseStoredPhone(store.whatsapp),
+  );
+
+  const phoneDisplay =
+    phoneDigits.length > 0
+      ? `+55 ${formatBRPhone(phoneDigits)}`
+      : "";
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    // Strip the fixed "+55 " prefix, keep only digits, max 11 (2 DDD + 9 mobile)
+    const afterPrefix = value.startsWith("+55 ")
+      ? value.slice(4)
+      : value.replace(/^\+?55\s?/, "");
+    const digits = afterPrefix.replace(/\D/g, "").slice(0, 11);
+    setPhoneDigits(digits);
+  }
 
   const storeUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://lampstore.com"}/${store.slug}`;
 
@@ -113,14 +162,21 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             WhatsApp
           </label>
           <input
-            name="whatsapp"
             type="text"
-            defaultValue={store.whatsapp ?? ""}
-            placeholder="5511999999999"
+            inputMode="tel"
+            value={phoneDisplay}
+            onChange={handlePhoneChange}
+            placeholder="+55 (11) 99999-9999"
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
+          {/* Send clean digits to the server — validation strips non-digits already */}
+          <input
+            type="hidden"
+            name="whatsapp"
+            value={phoneDigits.length >= 10 ? `55${phoneDigits}` : ""}
+          />
           <p className="text-xs text-gray-400">
-            Formato: código do país + DDD + número (sem espaços)
+            Celular: +55 (11) 99999-9999 · Fixo: +55 (11) 9999-9999
           </p>
         </div>
 
