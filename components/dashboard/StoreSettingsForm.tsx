@@ -277,7 +277,7 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
               Preencha o DDD e o número completo, ou deixe ambos em branco.
             </p>
           )}
-          {/* Send clean digits to the server — validation strips non-digits already */}
+          {/* Hidden field sends only digits to the server — this field is responsible for normalizing the value before submission */}
           <input
             type="hidden"
             name="whatsapp"
