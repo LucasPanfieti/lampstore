@@ -1,18 +1,17 @@
-import { createClient } from "@/lib/supabase/server";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { createClient, createAnonClient } from "@/lib/supabase/server";
 import { Json } from "@/types";
 
 /**
- * Plain server-side helper — accepts a pre-built Supabase client.
- * Safe to use inside `after()` where cookies() is unavailable.
+ * Plain server-side helper — uses a cookie-free anon client internally.
+ * Safe to call inside `after()` without blocking the render path.
  * Not a Server Action: never import this in Client Components.
  */
 export async function insertAnalyticsEvent(
-  supabase: SupabaseClient,
   storeId: string,
   eventType: "store_view" | "whatsapp_click" | "product_view",
   metadata?: Record<string, Json>,
 ) {
+  const supabase = createAnonClient();
   await supabase.from("analytics").insert({
     store_id: storeId,
     event_type: eventType,

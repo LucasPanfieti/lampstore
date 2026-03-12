@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { after } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import { insertAnalyticsEvent } from "@/lib/actions/analytics";
 import {
   formatCurrency,
@@ -53,10 +52,8 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) notFound();
 
-  // Create the client before after() — cookies() is not available inside it
-  const supabase = await createClient();
   after(() =>
-    insertAnalyticsEvent(supabase, store.id, "product_view", {
+    insertAnalyticsEvent(store.id, "product_view", {
       product_id: product.id,
     }),
   );

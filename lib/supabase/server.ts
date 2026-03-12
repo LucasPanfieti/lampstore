@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { Database } from "@/types";
 
@@ -24,5 +25,17 @@ export async function createClient() {
         },
       },
     }
+  );
+}
+
+/**
+ * Cookie-free anon client — safe to use inside after() and other
+ * contexts where cookies() is unavailable. Use only for operations
+ * that don't require user auth (e.g. analytics writes with anon key).
+ */
+export function createAnonClient() {
+  return createSupabaseClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 }
