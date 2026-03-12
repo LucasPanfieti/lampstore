@@ -91,6 +91,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   const numberDisplay = formatNumberPart(phoneNumber);
   // full digits for the hidden field
   const allDigits = `${ddd}${phoneNumber}`;
+  // warn if the user filled one side but not the other
+  const whatsappPartial =
+    (ddd !== "" && phoneNumber.length < 8) ||
+    (ddd === "" && phoneNumber.length > 0);
 
   function handleNumberChange(e: React.ChangeEvent<HTMLInputElement>) {
     const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
@@ -106,6 +110,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   }
 
   async function handleSubmit(formData: FormData) {
+    if (whatsappPartial) {
+      setError("Preencha o DDD e o número completo do WhatsApp, ou deixe os dois campos em branco.");
+      return;
+    }
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -182,7 +190,9 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             <select
               value={ddd}
               onChange={(e) => setDdd(e.target.value)}
-              className="px-2 py-3 bg-white border-y border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-inset cursor-pointer"
+              className={`px-2 py-3 bg-white border-y text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-inset cursor-pointer ${
+                whatsappPartial ? "border-red-400" : "border-gray-200"
+              }`}
             >
               <option value="">DDD</option>
               {BR_DDDS.map((d) => (
@@ -197,9 +207,16 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
               value={numberDisplay}
               onChange={handleNumberChange}
               placeholder="99999-9999"
-              className="flex-1 px-4 py-3 border border-l-0 border-gray-200 rounded-r-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-w-0"
+              className={`flex-1 px-4 py-3 border border-l-0 rounded-r-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-w-0 ${
+                whatsappPartial ? "border-red-400" : "border-gray-200"
+              }`}
             />
           </div>
+          {whatsappPartial && (
+            <p className="text-xs text-red-500">
+              Preencha o DDD e o número completo, ou deixe ambos em branco.
+            </p>
+          )}
           {/* Send clean digits to the server — validation strips non-digits already */}
           <input
             type="hidden"
