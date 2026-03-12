@@ -9,7 +9,7 @@ import {
   buildWhatsAppUrl,
   buildSingleProductMessage,
 } from "@/lib/utils";
-import { ArrowLeft, Package } from "lucide-react";
+import { ArrowLeft, Package, ExternalLink } from "lucide-react";
 import WhatsAppBuyButton from "@/components/store/WhatsAppBuyButton";
 import { getStoreBySlug, getProductBySlug } from "@/lib/queries/store";
 
@@ -174,6 +174,7 @@ export default async function ProductPage({ params }: Props) {
             <span style={{ color: "#1e1b4b" }}>Lamp</span>
             <span style={{ color: "#7723A4" }}>Store</span>
           </span>
+          <ExternalLink className="w-3 h-3" />
         </Link>
       </footer>
     </div>
