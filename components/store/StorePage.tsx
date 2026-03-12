@@ -111,8 +111,8 @@ export default function StorePage({ store, products }: StorePageProps) {
 
             <div className="space-y-2">
               <h1
-                className="text-2xl sm:text-3xl font-bold text-gray-900"
-                style={{ fontFamily: "'DM Serif Display', serif" }}
+                className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
                 {store.name}
               </h1>
