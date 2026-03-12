@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: Props) {
     : null;
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-14">
+    <div className="min-h-screen bg-gray-50">
       {/* Top bar */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center gap-3">
@@ -155,8 +155,8 @@ export default async function ProductPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Footer branding — fixed at bottom of viewport */}
-      <footer className="fixed bottom-0 inset-x-0 py-2 bg-white/80 backdrop-blur-sm border-t border-gray-100 text-center z-30">
+      {/* Footer branding */}
+      <footer className="py-2 bg-white border-t border-gray-100 text-center">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"

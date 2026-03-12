@@ -90,7 +90,7 @@ export default function StorePage({ store, products }: StorePageProps) {
   const themeColor = store.theme_color || "#7723A4";
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-14">
+    <div className="min-h-screen bg-gray-50">
       {/* Store header */}
       <div
         className="relative"
@@ -376,34 +376,32 @@ export default function StorePage({ store, products }: StorePageProps) {
         </>
       )}
 
-      {/* Footer branding — fixed at bottom, hidden when cart is open */}
-      {!cartOpen && (
-        <footer className="fixed bottom-0 inset-x-0 py-2 bg-white border-t border-gray-100 text-center z-30">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <Image
-            src="/logo_lampstore.webp"
-            alt="LampStore"
-            width={36}
-            height={36}
-            className="rounded"
-          />
-          Crie sua loja grátis no{" "}
-          <span
-            style={{
-              fontFamily: "var(--font-nunito), sans-serif",
-              fontWeight: 800,
-            }}
+      {/* Footer branding */}
+      <footer className="py-2 bg-white border-t border-gray-100 text-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <span style={{ color: "#1e1b4b" }}>Lamp</span>
-            <span style={{ color: "#7723A4" }}>Store</span>
-          </span>
-          <ExternalLink className="w-3 h-3" />
-        </Link>
+            <Image
+              src="/logo_lampstore.webp"
+              alt="LampStore"
+              width={36}
+              height={36}
+              className="rounded"
+            />
+            Crie sua loja grátis no{" "}
+            <span
+              style={{
+                fontFamily: "var(--font-nunito), sans-serif",
+                fontWeight: 800,
+              }}
+            >
+              <span style={{ color: "#1e1b4b" }}>Lamp</span>
+              <span style={{ color: "#7723A4" }}>Store</span>
+            </span>
+            <ExternalLink className="w-3 h-3" />
+          </Link>
       </footer>
-      )}
     </div>
   );
 }
