@@ -252,7 +252,7 @@ export default function StorePage({ store, products }: StorePageProps) {
       {cartCount > 0 && (
         <button
           onClick={() => setCartOpen(true)}
-          className="fixed bottom-6 right-6 text-white font-bold px-5 py-4 rounded-2xl shadow-xl flex items-center gap-3 hover:opacity-90 transition-all"
+          className="fixed bottom-6 right-6 text-white font-bold px-5 py-4 rounded-2xl shadow-xl flex items-center gap-3 hover:opacity-90 transition-all z-40"
           style={{ backgroundColor: themeColor }}
         >
           <div className="relative">
