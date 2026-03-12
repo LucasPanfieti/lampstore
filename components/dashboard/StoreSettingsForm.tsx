@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateStore } from "@/lib/actions/stores";
 import { Store } from "@/types";
+import { validateStoreName } from "@/lib/validations";
 import {
   Loader2,
   Store as StoreIcon,
@@ -80,6 +81,11 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [storeName, setStoreName] = useState(store.name);
+  const storeNameValidation = validateStoreName(storeName);
+  const storeNameError = storeName !== store.name || storeName.trim() === ""
+    ? (!storeNameValidation.ok ? storeNameValidation.error : null)
+    : null;
   const [themeColor, setThemeColor] = useState(store.theme_color);
   const [buttonColor, setButtonColor] = useState(store.button_color);
   const [copied, setCopied] = useState(false);
@@ -110,6 +116,10 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   }
 
   async function handleSubmit(formData: FormData) {
+    if (!storeNameValidation.ok) {
+      setError(storeNameValidation.error);
+      return;
+    }
     if (whatsappPartial) {
       setError("Preencha o DDD e o número completo do WhatsApp, ou deixe os dois campos em branco.");
       return;
@@ -173,9 +183,15 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             name="name"
             type="text"
             required
-            defaultValue={store.name}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            value={storeName}
+            onChange={(e) => setStoreName(e.target.value)}
+            className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+              storeNameError ? "border-red-400" : "border-gray-200"
+            }`}
           />
+          {storeNameError && (
+            <p className="text-xs text-red-500">{storeNameError}</p>
+          )}
         </div>
 
         <div className="space-y-1">
