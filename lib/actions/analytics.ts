@@ -1,19 +1,18 @@
-"use server";
-
 import { createClient } from "@/lib/supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Json } from "@/types";
 
-export async function trackEvent(
+/**
+ * Plain server-side helper — accepts a pre-built Supabase client.
+ * Safe to use inside `after()` where cookies() is unavailable.
+ * Not a Server Action: never import this in Client Components.
+ */
+export async function insertAnalyticsEvent(
+  supabase: SupabaseClient,
   storeId: string,
   eventType: "store_view" | "whatsapp_click" | "product_view",
   metadata?: Record<string, Json>,
-  // Accept a pre-built client so this can be called inside after() where
-  // cookies() is not accessible and createClient() would throw.
-  supabaseClient?: SupabaseClient,
 ) {
-  const supabase = supabaseClient ?? (await createClient());
-
   await supabase.from("analytics").insert({
     store_id: storeId,
     event_type: eventType,
@@ -21,7 +20,20 @@ export async function trackEvent(
   });
 }
 
+/** Server Action — serializable args only, safe to call from Client Components. */
+export async function trackEvent(
+  storeId: string,
+  eventType: "store_view" | "whatsapp_click" | "product_view",
+  metadata?: Record<string, Json>,
+) {
+  "use server";
+  const supabase = await createClient();
+  await insertAnalyticsEvent(supabase, storeId, eventType, metadata);
+}
+
+/** Server Action — safe to call from Client Components. */
 export async function getStoreAnalytics(storeId: string) {
+  "use server";
   const supabase = await createClient();
 
   const thirtyDaysAgo = new Date();

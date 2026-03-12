@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { trackEvent } from "@/lib/actions/analytics";
+import { insertAnalyticsEvent } from "@/lib/actions/analytics";
 import StorePage from "@/components/store/StorePage";
 import { getStoreBySlug, getActiveStoreProducts } from "@/lib/queries/store";
 
@@ -39,7 +39,7 @@ export default async function StorePageRoute({ params }: Props) {
 
   // Create the client before after() — cookies() is not available inside it
   const supabase = await createClient();
-  after(() => trackEvent(store.id, "store_view", undefined, supabase));
+  after(() => insertAnalyticsEvent(supabase, store.id, "store_view"));
 
   return <StorePage store={store} products={products} />;
 }
