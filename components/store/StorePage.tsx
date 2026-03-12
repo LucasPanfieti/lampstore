@@ -378,29 +378,29 @@ export default function StorePage({ store, products }: StorePageProps) {
 
       {/* Footer branding */}
       <footer className="py-2 bg-white border-t border-gray-100 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <Image
+            src="/logo_lampstore.webp"
+            alt="LampStore"
+            width={36}
+            height={36}
+            className="rounded"
+          />
+          Crie sua loja grátis no{" "}
+          <span
+            style={{
+              fontFamily: "var(--font-nunito), sans-serif",
+              fontWeight: 800,
+            }}
           >
-            <Image
-              src="/logo_lampstore.webp"
-              alt="LampStore"
-              width={36}
-              height={36}
-              className="rounded"
-            />
-            Crie sua loja grátis no{" "}
-            <span
-              style={{
-                fontFamily: "var(--font-nunito), sans-serif",
-                fontWeight: 800,
-              }}
-            >
-              <span style={{ color: "#1e1b4b" }}>Lamp</span>
-              <span style={{ color: "#7723A4" }}>Store</span>
-            </span>
-            <ExternalLink className="w-3 h-3" />
-          </Link>
+            <span style={{ color: "#1e1b4b" }}>Lamp</span>
+            <span style={{ color: "#7723A4" }}>Store</span>
+          </span>
+          <ExternalLink className="w-3 h-3" />
+        </Link>
       </footer>
     </div>
   );
