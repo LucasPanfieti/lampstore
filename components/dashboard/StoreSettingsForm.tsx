@@ -26,35 +26,54 @@ const THEME_COLORS = [
   "#6366f1",
 ];
 
-// Formats the digits after the country code into the Brazilian phone mask.
-// e.g. "11999991234" → "(11) 99999-1234"  /  "1133334444" → "(11) 3333-4444"
-function formatBRPhone(digitsAfterCC: string): string {
-  const ddd = digitsAfterCC.slice(0, 2);
-  const number = digitsAfterCC.slice(2);
+const BR_DDDS = [
+  "11","12","13","14","15","16","17","18","19", // SP
+  "21","22","24", // RJ
+  "27","28", // ES
+  "31","32","33","34","35","37","38", // MG
+  "41","42","43","44","45","46", // PR
+  "47","48","49", // SC
+  "51","53","54","55", // RS
+  "61", // DF
+  "62","64", // GO
+  "63", // TO
+  "65","66", // MT
+  "67", // MS
+  "68", // AC
+  "69", // RO
+  "71","73","74","75","77", // BA
+  "79", // SE
+  "81","87", // PE
+  "82", // AL
+  "83", // PB
+  "84", // RN
+  "85","88", // CE
+  "86","89", // PI
+  "91","93","94", // PA
+  "92","97", // AM
+  "95", // RR
+  "96", // AP
+  "98","99", // MA
+];
 
-  if (ddd.length < 2) return ddd.length === 0 ? "" : `(${ddd}`;
-
-  let display = `(${ddd})`;
-  if (number.length === 0) return display;
-
-  display += ` `;
-  // mobile: first digit is "9" and total number length can reach 9
-  // landline: 8 digits, split at 4
-  const splitAt = number[0] === "9" ? 5 : 4;
-  if (number.length <= splitAt) {
-    display += number;
-  } else {
-    display += `${number.slice(0, splitAt)}-${number.slice(splitAt, splitAt + 4)}`;
-  }
-  return display;
+// Formats the number part (after DDD) with mask: 99999-9999 or 9999-9999
+function formatNumberPart(digits: string): string {
+  const splitAt = digits[0] === "9" ? 5 : 4;
+  if (digits.length <= splitAt) return digits;
+  return `${digits.slice(0, splitAt)}-${digits.slice(splitAt, splitAt + 4)}`;
 }
 
-function parseStoredPhone(whatsapp: string | null | undefined): string {
-  if (!whatsapp) return "";
+function parseStoredPhone(whatsapp: string | null | undefined): {
+  ddd: string;
+  number: string;
+} {
+  if (!whatsapp) return { ddd: "", number: "" };
   const digits = whatsapp.replace(/\D/g, "");
-  // Strip leading country code "55" if present (stored as "5511999991234")
-  if (digits.startsWith("55") && digits.length > 2) return digits.slice(2);
-  return digits;
+  // Strip leading country code "55" if present
+  const local = digits.startsWith("55") && digits.length > 2
+    ? digits.slice(2)
+    : digits;
+  return { ddd: local.slice(0, 2), number: local.slice(2) };
 }
 
 export default function StoreSettingsForm({ store }: { store: Store }) {
@@ -64,15 +83,18 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
   const [themeColor, setThemeColor] = useState(store.theme_color);
   const [buttonColor, setButtonColor] = useState(store.button_color);
   const [copied, setCopied] = useState(false);
-  const [phoneDigits, setPhoneDigits] = useState(() =>
-    parseStoredPhone(store.whatsapp),
+  const [ddd, setDdd] = useState(() => parseStoredPhone(store.whatsapp).ddd);
+  const [phoneNumber, setPhoneNumber] = useState(
+    () => parseStoredPhone(store.whatsapp).number,
   );
 
-  const phoneDisplay = formatBRPhone(phoneDigits);
+  const numberDisplay = formatNumberPart(phoneNumber);
+  // full digits for the hidden field
+  const allDigits = `${ddd}${phoneNumber}`;
 
-  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-    setPhoneDigits(digits);
+  function handleNumberChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const digits = e.target.value.replace(/\D/g, "").slice(0, 9);
+    setPhoneNumber(digits);
   }
 
   const storeUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://lampstore.com"}/${store.slug}`;
@@ -154,26 +176,38 @@ export default function StoreSettingsForm({ store }: { store: Store }) {
             WhatsApp
           </label>
           <div className="flex">
-            <span className="flex items-center px-4 py-3 bg-gray-100 border border-r-0 border-gray-200 rounded-l-xl text-sm font-medium text-gray-500 select-none whitespace-nowrap">
+            <span className="flex items-center px-3 py-3 bg-gray-100 border border-r-0 border-gray-200 rounded-l-xl text-sm font-medium text-gray-500 select-none whitespace-nowrap">
               🇧🇷 +55
             </span>
+            <select
+              value={ddd}
+              onChange={(e) => setDdd(e.target.value)}
+              className="px-2 py-3 bg-white border-y border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-inset cursor-pointer"
+            >
+              <option value="">DDD</option>
+              {BR_DDDS.map((d) => (
+                <option key={d} value={d}>
+                  ({d})
+                </option>
+              ))}
+            </select>
             <input
               type="text"
               inputMode="tel"
-              value={phoneDisplay}
-              onChange={handlePhoneChange}
-              placeholder="(11) 99999-9999"
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-r-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-w-0"
+              value={numberDisplay}
+              onChange={handleNumberChange}
+              placeholder="99999-9999"
+              className="flex-1 px-4 py-3 border border-l-0 border-gray-200 rounded-r-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-w-0"
             />
           </div>
           {/* Send clean digits to the server — validation strips non-digits already */}
           <input
             type="hidden"
             name="whatsapp"
-            value={phoneDigits.length >= 10 ? `55${phoneDigits}` : ""}
+            value={allDigits.length >= 10 ? `55${allDigits}` : ""}
           />
           <p className="text-xs text-gray-400">
-            Celular: (11) 99999-9999 · Fixo: (11) 9999-9999
+            Celular: 99999-9999 · Fixo: 9999-9999
           </p>
         </div>
 
